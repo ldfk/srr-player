@@ -1,0 +1,20 @@
+{
+  "name": "srr-player",
+  "homepage": "http://www.silver-rocket.org",
+  "author": "Lukas Landa <landa.lukas@gmail.com>",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack -p",
+    "watch-dev": "webpack -d --watch"
+  },
+  "devDependencies": {
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.1.1",
+    "babel-preset-env": "^1.6.1",
+    "webpack": "^3.5.3"
+  },
+  "dependencies": {
+    "howler": "^2.0.4"
+  }
+}

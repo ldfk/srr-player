@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SRR Player - example</title>
+
+    <link href="./assets/css/example.css" rel="stylesheet" type="text/css" media="all"/>
+</head>
+<body>
+<div class="wrap">
+    <div class="page">
+        <h1><span>Silver Rocket</span></h1>
+
+        <div class="mainmenu"></div>
+        <div class="rightcolumn"></div>
+
+        <div class="main katalog detail">
+            <h3>OR - Jaro</h3>
+
+            <p>(SRR 73) MP3 / LP+MP3</p>
+
+            <p><img src="./assets/images/23f3ac904fcf0c62d7d6086790a5f6c7.jpg" width="550" height="550" alt="OR - Jaro" /></p>
+
+            <p>Tisíc a jeden důkazů, že hlasitá hudba, kterou vymysleli tři chlápci někde ve sklepě, je nekonečná studnice pořád novýho výraziva. Or na týhle desce NESKUTEČNĚ vyrostli, přestože nohy pořád nechávají brouzdat stokou. Mimořádný pnutí uvnitř celý nahrávky. Cesty ven. Dokonalá forma komunikace.</p>
+
+            <input type="submit" value="Koupit" /> SRR 73 <b>LP+MP3</b> 300,-<br/>
+            <input type="submit" value="Koupit" /> SRR 73 <b>MP3</b> 100,-<br/>
+            <input type="submit" value="Koupit" /> SRR 73 <b>[LP-MP3]</b> 200,-<br/>
+
+            <div id="srr-player"></div>
+
+            <script src="../dist/player.js"></script>
+            <script>
+                new srrPlayer.Player([
+                    {
+                        name: 'Čaj',
+                    },
+                    {
+                        name: 'Dolce vita',
+                        src: './assets/mp3/dolce_vita.mp3'
+                    },
+                    {
+                        name: 'Prach'
+                    },
+                    {
+                        name: 'Kouty'
+                    },
+                    {
+                        name: 'Sirky'
+                    },
+                    {
+                        name: 'Můry',
+                        src: './assets/mp3/mury.mp3'
+                    },
+                    {
+                        name: 'Ruce'
+                    },
+                    {
+                        name: 'Helma'
+                    }
+                ]);
+            </script>
+        </div>
+
+        <div class="footer"></div>
+    </div>
+</div>
+</body>
+</html>
