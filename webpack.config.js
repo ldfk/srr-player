@@ -1,7 +1,7 @@
 var path = require('path');
 
 module.exports = {
-    entry: './src/player.js',
+    entry: ['./src/polyfill.js', './src/player.js'],
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'player.js',

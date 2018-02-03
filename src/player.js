@@ -9,9 +9,9 @@ export class Player {
     /**
      * Constructor
      *
-     * @param items {Array}
+     * @param config {Object}
      */
-    constructor(items) {
+    constructor(config) {
 
         /**
          * Playlist
@@ -19,7 +19,13 @@ export class Player {
          * @type {Playlist}
          * @private
          */
-        this._playlist = new Playlist(items);
+        this._playlist = new Playlist(config.items);
+
+        /**
+         * @type {string}
+         * @private
+         */
+        this._playerId = config.playerId || 'srr-player';
 
         /**
          * Play element
@@ -74,7 +80,7 @@ export class Player {
      * @private
      */
     _renderPlayer() {
-        let container = document.getElementById('srr-player');
+        let container = document.getElementById(this._playerId);
 
         container.innerHTML = `
             <div class="audio-player">
@@ -106,10 +112,10 @@ export class Player {
             </table>`;
 
 
-        this._playEl     = document.querySelector('#srr-player .audio-player .control-button.control-play');
-        this._progressEl = document.querySelector('#srr-player .audio-player .time-line .progress-bar .progress');
-        this._durationEl = document.querySelector('#srr-player .audio-player .time-line .duration');
-        this._titleEl    = document.querySelector('#srr-player .audio-player .track-title');
+        this._playEl     = document.querySelector(`#${this._playerId} .audio-player .control-button.control-play`);
+        this._progressEl = document.querySelector(`#${this._playerId} .audio-player .time-line .progress-bar .progress`);
+        this._durationEl = document.querySelector(`#${this._playerId} .audio-player .time-line .duration`);
+        this._titleEl    = document.querySelector(`#${this._playerId} .audio-player .track-title`);
     }
 
     /**
@@ -118,7 +124,7 @@ export class Player {
      * @private
      */
     _renderPlaylist() {
-        let container = document.getElementById('srr-player');
+        let container = document.getElementById(this._playerId);
 
         container.innerHTML = `
             <ol>
@@ -142,23 +148,23 @@ export class Player {
 
         // rewind
         document
-            .querySelector('#srr-player .audio-player .control-button.control-rewind')
+            .querySelector(`#${this._playerId} .audio-player .control-button.control-rewind`)
             .addEventListener('click', () => self._skip('prev'));
 
         // forward
         document
-            .querySelector('#srr-player .audio-player .control-button.control-forward')
+            .querySelector(`#${this._playerId} .audio-player .control-button.control-forward`)
             .addEventListener('click', () => self._skip('next'));
 
         // progress
         document
-            .querySelector('#srr-player .audio-player .time-line .progress-bar')
+            .querySelector(`#${this._playerId} .audio-player .time-line .progress-bar`)
             .addEventListener('click', function (event) {
                 self._seek((event.offsetX /this.clientWidth));
             });
 
         // track list
-        document.querySelectorAll('#srr-player .track-list .playable').forEach(function (track) {
+        document.querySelectorAll(`#${this._playerId} .track-list .playable`).forEach(function (track) {
             let Track = self._playlist.getTrack(track.rowIndex);
 
             if (Track) {

@@ -27,38 +27,41 @@
             <input type="submit" value="Koupit" /> SRR 73 <b>MP3</b> 100,-<br/>
             <input type="submit" value="Koupit" /> SRR 73 <b>[LP-MP3]</b> 200,-<br/>
 
-            <div id="srr-player"></div>
+            <div class="srr-player" id="srr-player"></div>
 
             <script src="../dist/player.js"></script>
             <script>
-                new srrPlayer.Player([
-                    {
-                        name: 'Čaj',
-                    },
-                    {
-                        name: 'Dolce vita',
-                        src: './assets/mp3/dolce_vita.mp3'
-                    },
-                    {
-                        name: 'Prach'
-                    },
-                    {
-                        name: 'Kouty'
-                    },
-                    {
-                        name: 'Sirky'
-                    },
-                    {
-                        name: 'Můry',
-                        src: './assets/mp3/mury.mp3'
-                    },
-                    {
-                        name: 'Ruce'
-                    },
-                    {
-                        name: 'Helma'
-                    }
-                ]);
+                new srrPlayer.Player({
+                    "playerId": "srr-player",
+                    "items": [
+                        {
+                            name: 'Čaj',
+                        },
+                        {
+                            name: 'Dolce vita',
+                            src: './assets/mp3/dolce_vita.mp3'
+                        },
+                        {
+                            name: 'Prach'
+                        },
+                        {
+                            name: 'Kouty'
+                        },
+                        {
+                            name: 'Sirky'
+                        },
+                        {
+                            name: 'Můry',
+                            src: './assets/mp3/mury.mp3'
+                        },
+                        {
+                            name: 'Ruce'
+                        },
+                        {
+                            name: 'Helma'
+                        }
+                    ]
+                });
             </script>
         </div>
 
