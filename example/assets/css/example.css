@@ -361,3 +361,7 @@ a img {
 .srr-player .track-list tr.playable {
     cursor: pointer;
 }
+
+.srr-player .track-list span.duration {
+    font-size: smaller;
+}

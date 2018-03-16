@@ -28,6 +28,13 @@ export default class Track {
         this._name = item.name;
 
         /**
+         * Track duration in seconds (server information)
+         *
+         * @type {Number|null}
+         */
+        this._duration = item.duration || null;
+
+        /**
          * Track source
          *
          * @type {String|undefined}
@@ -239,7 +246,7 @@ export default class Track {
         }
 
         if (true === format) {
-            seek = Track._formatTime(Math.round(seek));
+            seek = Track.formatTime(Math.round(seek));
         }
 
         return seek;
@@ -248,10 +255,19 @@ export default class Track {
     /**
      * Get track duration
      *
+     * Primarily try to get duration from track definition (e.g. server information) if is not defined try to get
+     * duration from loaded track (if is loaded)
+     *
      * @returns {Number}
      */
     getDuration() {
-        return this._sound.duration();
+        let duration = this._duration || 0;
+
+        if (null === this._duration && this._sound) {
+            duration = this._sound.duration();
+        }
+
+        return duration;
     }
 
     /**
@@ -259,11 +275,10 @@ export default class Track {
      *
      * @param time {Number}
      * @returns {String}
-     * @private
      */
-    static _formatTime(time) {
+    static formatTime(time) {
         let minutes = Math.floor(time / 60) || 0,
-            seconds = (time - minutes * 60) || 0;
+            seconds = Math.floor(time - minutes * 60) || 0;
 
         return (minutes < 10 ? '0' : '') + minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
     }

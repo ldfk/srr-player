@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.1.0]
+* support track duration
+
+
 ## [2.0.0]
 
 * fixed problems with old browsers

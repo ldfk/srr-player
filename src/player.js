@@ -1,5 +1,6 @@
 import { Howl } from 'howler';
 import Playlist from './playlist';
+import Track from "./track";
 
 /**
  * Player
@@ -80,18 +81,19 @@ export class Player {
      * @private
      */
     _renderPlayer() {
-        let container = document.getElementById(this._playerId);
+        let container = document.getElementById(this._playerId),
+            currentTrack = this._playlist.getCurrentTrack();
 
         container.innerHTML = `
             <div class="audio-player">
-                <p class="track-title">${this._playlist.getCurrentTrack().getName()}</p>
+                <p class="track-title">${currentTrack.getName()}</p>
                 
                 <div class="time-line">
                     <div class="progress-bar">
                         <div class="progress"></div>
                     </div>
                     
-                    <p class="duration">00:00</p>
+                    <p class="duration">${Player._getDurationTemplate(currentTrack)}</p>
                 </div>
                 
                 <div class="control-button control-rewind"></div>
@@ -104,8 +106,7 @@ export class Player {
                     ${this._playlist.getTracks().map(track =>
                         `<tr class="${track.getSrc() ? 'playable' : ''}">
                             <td class="control-button ${track.getSrc() ? 'control-play' : ''}"></td>
-                            <td></td>
-                            <td>${track.getId() +1}. ${track.getName()}</td>
+                            <td>${track.getId() +1}. ${track.getName()} ${track.getDuration() ? `<span class="duration">${Track.formatTime(track.getDuration())}</span>` : ''}</td>
                         </tr>`
                     ).join('')}
                 </tbody>
@@ -309,11 +310,15 @@ export class Player {
      * @private
      */
     _step() {
-        let track = this._playlist.getCurrentTrack();
+        let track = this._playlist.getCurrentTrack(),
+            timeElapsedEl = this._getTimeElapsedEl();
 
         if (track.hasSound() && !track.isLoading()) {
             this._progressEl.style.width = (((track.getSeek() / track.getDuration()) * 100) || 0) + '%';
-            this._durationEl.innerHTML = track.getSeek(true);
+
+            if (timeElapsedEl) {
+                timeElapsedEl.innerHTML = track.getSeek(true);
+            }
 
             if (track.isPlaying()) {
                 requestAnimationFrame(this._step.bind(this));
@@ -343,7 +348,7 @@ export class Player {
                     if (!track.isLoading()) {
                         clearInterval(self.loadingId);
                         self.loadingId = null;
-                        self._durationEl.innerHTML = '00:00';
+                        self._durationEl.innerHTML = Player._getDurationTemplate(track);
                     }
                 }, 500);
             }
@@ -357,7 +362,7 @@ export class Player {
 
             this._titleEl.innerHTML = track.getName();
             this._progressEl.style.width = '0%';
-            this._durationEl.innerHTML = '00:00';
+            this._durationEl.innerHTML = Player._getDurationTemplate(track);
         }
 
         loading();
@@ -365,5 +370,28 @@ export class Player {
         this._playEl.className = track.isPlaying()
             ? 'control-button control-play playing'
             : 'control-button control-play';
+    }
+
+    /**
+     * Get duration template
+     *
+     * @param track {Track}
+     * @returns {String}
+     * @private
+     */
+    static _getDurationTemplate(track) {
+        let duration = Track.formatTime(track.getDuration());
+
+        return `<span class="time-elapsed">00:00</span> / <span class="track-duration">${duration}</span>`;
+    }
+
+    /**
+     * Get time elapsed element
+     *
+     * @returns {Element}
+     * @private
+     */
+    _getTimeElapsedEl() {
+        return document.querySelector(`#${this._playerId} .audio-player .time-line .duration .time-elapsed`);
     }
 }
