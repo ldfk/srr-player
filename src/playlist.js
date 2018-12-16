@@ -9,8 +9,9 @@ export default class Playlist {
      * Constructor
      *
      * @param items {Array}
+     * @param aq {Object}
      */
-    constructor(items) {
+    constructor(items, aq) {
         /**
          * Track list
          *
@@ -30,7 +31,7 @@ export default class Playlist {
         let self = this;
 
         items.forEach(function (item, index) {
-            let track = new Track(index, item);
+            let track = new Track(index, item, aq);
 
             if (null === self._current && null !== track.getSrc()) {
                 self._current = track;

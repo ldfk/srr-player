@@ -20,7 +20,7 @@ export class Player {
          * @type {Playlist}
          * @private
          */
-        this._playlist = new Playlist(config.items);
+        this._playlist = new Playlist(config.items, config.aq || []);
 
         /**
          * @type {string}

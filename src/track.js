@@ -8,8 +8,9 @@ export default class Track {
      *
      * @param id {Number}
      * @param item {Object}
+     * @param aq {Object}
      */
-    constructor(id, item) {
+    constructor(id, item, aq) {
 
         /**
          * Track id
@@ -20,12 +21,28 @@ export default class Track {
         this._id = id;
 
         /**
+         * Event tracking
+         *
+         * @type {Object}
+         * @private
+         */
+        this._aq = aq;
+
+        /**
          * Track name
          *
          * @type {String}
          * @private
          */
         this._name = item.name;
+
+        /**
+         * Artist name
+         *
+         * @type {String|null}
+         * @private
+         */
+        this._artist = item.artist || null;
 
         /**
          * Track duration in seconds (server information)
@@ -73,6 +90,14 @@ export default class Track {
          * @private
          */
         this._playing = false;
+
+        /**
+         * Pause state
+         *
+         * @type {boolean}
+         * @private
+         */
+        this._paused = false;
     }
 
     /**
@@ -171,15 +196,16 @@ export default class Track {
      * @returns {Track}
      */
     play() {
-        this._playing = true;
-        this._playEl.className = 'control-button control-play playing';
-
         switch (this._sound.state()) {
             case 'unloaded':
                 this._sound.load();
                 break;
 
             case 'loaded':
+                if (!this._paused) {
+                    this._aq.push(['player', 'play', this._artist, this._name]);
+                }
+
                 if (null === this._soundId) {
                     this._soundId = this._sound.play();
                 } else {
@@ -188,6 +214,10 @@ export default class Track {
 
                 break;
         }
+
+        this._playing = true;
+        this._paused = false;
+        this._playEl.className = 'control-button control-play playing';
 
         return this;
     }
@@ -199,9 +229,11 @@ export default class Track {
      */
     pause() {
         this._playing = false;
+        this._paused = true;
         this._playEl.className = 'control-button control-play';
 
         if ('loaded' === this._sound.state()) {
+            this._aq.push(['player', 'pause', this._artist, this._name]);
             this._sound.pause(this._soundId);
         }
 
@@ -215,6 +247,7 @@ export default class Track {
      */
     stop() {
         this._playing = false;
+        this._paused = false;
         this._playEl.className = 'control-button control-play';
 
         switch (this._sound.state()) {
@@ -240,6 +273,7 @@ export default class Track {
      * @returns {Track}
      */
     seek(seek) {
+        this._aq.push(['player', 'seek', this._artist, this._name]);
         this._sound.seek(seek, this._soundId);
 
         return this;

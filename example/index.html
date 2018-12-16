@@ -5,6 +5,11 @@
     <title>SRR Player - example</title>
 
     <link href="./assets/css/example.css" rel="stylesheet" type="text/css" media="all"/>
+
+    <!-- Analytics -->
+    <script type="text/javascript">
+        var _aq = [];
+    </script>
 </head>
 <body>
 <div class="wrap">
@@ -32,34 +37,43 @@
             <script src="../dist/player.js"></script>
             <script>
                 new srrPlayer.Player({
+                    "aq": _aq,
                     "playerId": "srr-player",
                     "items": [
                         {
                             name: 'Čaj',
+                            artist: 'Or',
                         },
                         {
                             name: 'Dolce vita',
-                            src: './assets/mp3/dolce_vita.mp3'
+                            artist: 'Or',
+                            src: './assets/mp3/dolce_vita.mp3',
                         },
                         {
-                            name: 'Prach'
+                            name: 'Prach',
+                            artist: 'Or',
                         },
                         {
-                            name: 'Kouty'
+                            name: 'Kouty',
+                            artist: 'Or',
                         },
                         {
-                            name: 'Sirky'
+                            name: 'Sirky',
+                            artist: 'Or',
                         },
                         {
                             name: 'Můry',
+                            artist: 'Or',
                             src: './assets/mp3/mury.mp3',
                             duration: 322
                         },
                         {
-                            name: 'Ruce'
+                            name: 'Ruce',
+                            artist: 'Or',
                         },
                         {
-                            name: 'Helma'
+                            name: 'Helma',
+                            artist: 'Or',
                         }
                     ]
                 });

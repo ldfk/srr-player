@@ -3,6 +3,7 @@
 ## [2.1.0]
 * support track duration
 * HTML5 audio support
+* Event tracking (play, seek, pause)
 
 
 ## [2.0.0]
