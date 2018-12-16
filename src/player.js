@@ -256,7 +256,7 @@ export class Player {
 
             track.setSound(new Howl({
                 src    : track.getSrc(),
-                html5  : false,
+                html5  : true,
                 preload: false,
 
                 onload: function() {

@@ -51,6 +51,14 @@ export default class Track {
         this._sound = null;
 
         /**
+         * Sound id
+         *
+         * @type {Number|null}
+         * @private
+         */
+        this._soundId = null;
+
+        /**
          * Control element
          *
          * @type {Element|null}
@@ -172,7 +180,12 @@ export default class Track {
                 break;
 
             case 'loaded':
-                this._sound.play();
+                if (null === this._soundId) {
+                    this._soundId = this._sound.play();
+                } else {
+                    this._sound.play(this._soundId);
+                }
+
                 break;
         }
 
@@ -189,7 +202,7 @@ export default class Track {
         this._playEl.className = 'control-button control-play';
 
         if ('loaded' === this._sound.state()) {
-            this._sound.pause();
+            this._sound.pause(this._soundId);
         }
 
         return this;
@@ -213,7 +226,7 @@ export default class Track {
                 break;
 
             case 'loaded':
-                this._sound.stop();
+                this._sound.stop(this._soundId);
                 break;
         }
 
@@ -227,7 +240,7 @@ export default class Track {
      * @returns {Track}
      */
     seek(seek) {
-        this._sound.seek(seek);
+        this._sound.seek(seek, this._soundId);
 
         return this;
     }

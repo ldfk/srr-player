@@ -2,6 +2,7 @@
 
 ## [2.1.0]
 * support track duration
+* HTML5 audio support
 
 
 ## [2.0.0]
