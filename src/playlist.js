@@ -9,7 +9,7 @@ export default class Playlist {
      * Constructor
      *
      * @param items {Array}
-     * @param aq {Object}
+     * @param aq {String}
      */
     constructor(items, aq) {
         /**

@@ -8,7 +8,7 @@ export default class Track {
      *
      * @param id {Number}
      * @param item {Object}
-     * @param aq {Object}
+     * @param aq {String}
      */
     constructor(id, item, aq) {
 
@@ -23,7 +23,7 @@ export default class Track {
         /**
          * Event tracking
          *
-         * @type {Object}
+         * @type {String}
          * @private
          */
         this._aq = aq;
@@ -203,7 +203,7 @@ export default class Track {
 
             case 'loaded':
                 if (!this._paused) {
-                    this._aq.push(['player', 'play', this._artist, this._name]);
+                    this._trackEvent('player', 'play', `${this._artist} - ${this._name}`);
                 }
 
                 if (null === this._soundId) {
@@ -233,7 +233,7 @@ export default class Track {
         this._playEl.className = 'control-button control-play';
 
         if ('loaded' === this._sound.state()) {
-            this._aq.push(['player', 'pause', this._artist, this._name]);
+            this._trackEvent('player', 'pause', `${this._artist} - ${this._name}`);
             this._sound.pause(this._soundId);
         }
 
@@ -273,7 +273,7 @@ export default class Track {
      * @returns {Track}
      */
     seek(seek) {
-        this._aq.push(['player', 'seek', this._artist, this._name]);
+        this._trackEvent('player', 'seek', `${this._artist} - ${this._name}`);
         this._sound.seek(seek, this._soundId);
 
         return this;
@@ -328,5 +328,18 @@ export default class Track {
             seconds = Math.floor(time - minutes * 60) || 0;
 
         return (minutes < 10 ? '0' : '') + minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+    }
+
+    /**
+     * @param category {String}
+     * @param action {String}
+     * @param name {String}
+     *
+     * @private
+     */
+    _trackEvent(category, action, name) {
+        if (typeof this._aq === 'string' && typeof window[this._aq] === 'object' && typeof window[this._aq].push === 'function') {
+            window[this._aq].push(['trackEvent', category, action, name]);
+        }
     }
 }
