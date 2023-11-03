@@ -333,22 +333,21 @@ export class Player {
      * @private
      */
     _updatePlayer(track) {
-        let self    = this,
-            current = this._playlist.getCurrentTrack();
+        let current = this._playlist.getCurrentTrack();
 
-        let loading = function () {
-            if (track.isLoading() && !self.loadingId) {
+        const loading = () => {
+            if (track.isLoading() && !this.loadingId) {
                 let i = 0;
 
-                self.loadingId = setInterval(function () {
+                this.loadingId = setInterval(() => {
                     i = ++i % 8;
 
-                    self._durationEl.innerHTML = new Array(i+1).join(".");
+                    this._durationEl.innerHTML = new Array(i+1).join(".");
 
                     if (!track.isLoading()) {
-                        clearInterval(self.loadingId);
-                        self.loadingId = null;
-                        self._durationEl.innerHTML = Player._getDurationTemplate(track);
+                        clearInterval(this.loadingId);
+                        this.loadingId = null;
+                        this._durationEl.innerHTML = Player._getDurationTemplate(track);
                     }
                 }, 500);
             }
